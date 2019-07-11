@@ -3,9 +3,10 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import sg.supermarket_kata.utils.DoubleUtil;
 /**
  * @author Badis
  *
@@ -16,18 +17,19 @@ public class Bill {
 	private List<Item> items = new ArrayList<Item>();
 	private List<Discount> discounts = new ArrayList<Discount>();
 
-	public Double getTotalPrice() {
-		double total = 0.0;
-		total+=items.stream()
+	public BigDecimal getTotalPrice() {
+		BigDecimal total = BigDecimal.ZERO;
+		total=total.add(items.stream()
 				  .map(item -> item.getTotalPrice())
-				  .reduce((a, b) -> a + b).orElse(0.0);
-		total-= discounts.stream()
+				  .reduce((a, b) -> a.add(b)).orElse(BigDecimal.ZERO));
+		total=total.subtract(discounts.stream()
 				  .map(item -> item.getDiscountAmount())
-				  .reduce((a, b) -> a - b).orElse(0.0);
-		return DoubleUtil.round(total, 2);
+				  .reduce((a, b) -> a.subtract(b)).orElse(BigDecimal.ZERO));
+		total=total.setScale(2, RoundingMode.CEILING);
+		return total;
 	}
 
-	public void addProduct(Product p, double quantity, double price, double totalPrice) {
+	public void addProduct(Product p, BigDecimal quantity, BigDecimal price, BigDecimal totalPrice) {
 		this.items.add(new Item(p, quantity, price, totalPrice));
 	}
 

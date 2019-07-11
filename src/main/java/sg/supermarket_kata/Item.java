@@ -3,24 +3,26 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
+
 /**
  * @author Badis
  *
  */
 public class Item {
     private final Product product;
-    private final double price;
-    private double totalPrice;
-    private final double quantity;
+    private final BigDecimal price;
+    private BigDecimal totalPrice;
+    private final BigDecimal quantity;
 
-    public Item(Product p, double quantity, double price, double totalPrice) {
+    public Item(Product p, BigDecimal quantity, BigDecimal price, BigDecimal totalPrice) {
         this.product = p;
         this.quantity = quantity;
         this.price = price;
         this.totalPrice = totalPrice;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
@@ -28,11 +30,11 @@ public class Item {
         return product;
     }
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 

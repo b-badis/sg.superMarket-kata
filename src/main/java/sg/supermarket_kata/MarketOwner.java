@@ -3,13 +3,14 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import sg.supermarket_kata.enums.OfferType;
 import sg.supermarket_kata.offersStrategy.Offer;
-import sg.supermarket_kata.offersStrategy.ThreeForX;
 import sg.supermarket_kata.offersStrategy.ThreeForTwo;
+import sg.supermarket_kata.offersStrategy.ThreeForX;
 
 /**
  * @author Badis
@@ -24,7 +25,7 @@ public class MarketOwner {
         this.catalog = catalog;
     }
 
-	public void addOffer(OfferType offerType, Product product, double discountPrice) {
+	public void addOffer(OfferType offerType, Product product, BigDecimal discountPrice) {
 		if (offerType == OfferType.ThreeForAmount) {
 			this.offers.put(product, new ThreeForX(offerType, product, discountPrice));
 		}else {
@@ -38,9 +39,9 @@ public class MarketOwner {
 		Bill bill = new Bill();
 		for (ProductQuantity pq : cart.getItems()) {
 			Product p = pq.getProduct();
-			double quantity = pq.getQuantity();
-			double unitPrice = this.catalog.getUnitPrice(p);
-			double price = quantity * unitPrice;
+			BigDecimal quantity = pq.getQuantity();
+			BigDecimal unitPrice = this.catalog.getUnitPrice(p);
+			BigDecimal price = quantity.multiply(unitPrice);
 			bill.addProduct(p, quantity, unitPrice, price);
 		}
 		cart.updateOffers(bill, this.offers, this.catalog);

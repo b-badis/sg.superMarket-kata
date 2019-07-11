@@ -3,6 +3,8 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -26,36 +28,40 @@ public class DiscountTesting extends TestCase{
     
     @Test
     public void testThreeForTwoOffer(){
-    	Bill bill = setCaracteristicsForTestOffer(3, OfferType.ThreeForTwo, 800.0);
-        Double expectedResult = 2*400.0;
+    	Bill bill = setCaracteristicsForTestOffer(new BigDecimal(3), OfferType.ThreeForTwo, new BigDecimal(800.0));
+    	BigDecimal expectedResult = new BigDecimal(2*400.0);
+    	expectedResult=expectedResult.setScale(2, RoundingMode.CEILING);
         Assertions.assertEquals(expectedResult, bill.getTotalPrice());
     }
     
     @Test
     public void testThreeForTwoOfferIfQuantityInferiorTo2(){
-    	Bill bill = setCaracteristicsForTestOffer(1, OfferType.ThreeForTwo, 400.0);
-        Double expectedResult = 400.0;
+    	Bill bill = setCaracteristicsForTestOffer(new BigDecimal(1), OfferType.ThreeForTwo, new BigDecimal(400.0));
+    	BigDecimal expectedResult = new BigDecimal(400.0);
+    	expectedResult=expectedResult.setScale(2, RoundingMode.CEILING);
         Assertions.assertEquals(expectedResult, bill.getTotalPrice());
     }
      
     @Test
     public void testThreeForAmountOffer(){
-    	Bill bill = setCaracteristicsForTestOffer(4, OfferType.ThreeForAmount, 1000.0);
-        Double expectedResult = 1400.0;
+    	Bill bill = setCaracteristicsForTestOffer(new BigDecimal(4), OfferType.ThreeForAmount, new BigDecimal(1000.0));
+    	BigDecimal expectedResult = new BigDecimal(1400.0);
+    	expectedResult=expectedResult.setScale(2, RoundingMode.CEILING);
         Assertions.assertEquals(expectedResult, bill.getTotalPrice());
     }
     
     @Test
 	public void testThreeForAmountIfQuantityInferiorTo3 () {
-    	Bill bill = setCaracteristicsForTestOffer(1, OfferType.ThreeForAmount,400.0);
-        Double expectedResult = 400.0;
+    	Bill bill = setCaracteristicsForTestOffer(new BigDecimal(1), OfferType.ThreeForAmount,new BigDecimal(400.0));
+    	BigDecimal expectedResult = new BigDecimal(400.0);
+    	expectedResult=expectedResult.setScale(2, RoundingMode.CEILING);
         Assertions.assertEquals(expectedResult, bill.getTotalPrice());
 	}
   
     @Test
     public void testDiscountIsNull () {
-    	catalog.addProduct(canOfBeans, 400.0);
-        cart.addItemQuantity(canOfBeans, 5);        
+    	catalog.addProduct(canOfBeans, new BigDecimal(400.0));
+        cart.addItemQuantity(canOfBeans, new BigDecimal(5));        
         Bill bill = marketOwner.extractBill(cart);
         List<Discount> discounts = bill.getDiscounts();
         Assertions.assertTrue(discounts.isEmpty());
@@ -63,15 +69,16 @@ public class DiscountTesting extends TestCase{
     
     @Test
     public void testWithoutDiscount () {
-    	catalog.addProduct(canOfBeans, 400.0);
-        cart.addItemQuantity(canOfBeans, 5);        
+    	catalog.addProduct(canOfBeans, new BigDecimal(400.0));
+        cart.addItemQuantity(canOfBeans, new BigDecimal(5));        
         Bill bill = marketOwner.extractBill(cart);
-        Double expectedResult = 2000.0;
+        BigDecimal expectedResult = new BigDecimal(2000.0);
+        expectedResult=expectedResult.setScale(2, RoundingMode.CEILING);
         Assertions.assertEquals(expectedResult, bill.getTotalPrice());
     }
     
-    private Bill setCaracteristicsForTestOffer(double quantity, OfferType offerType, double discountPrice) {
-    	catalog.addProduct(canOfBeans, 400);
+    private Bill setCaracteristicsForTestOffer(BigDecimal quantity, OfferType offerType, BigDecimal discountPrice) {
+    	catalog.addProduct(canOfBeans, new BigDecimal(400));
         cart.addItemQuantity(canOfBeans, quantity);
         marketOwner.addOffer(offerType, canOfBeans, discountPrice);
         Bill bill = marketOwner.extractBill(cart);

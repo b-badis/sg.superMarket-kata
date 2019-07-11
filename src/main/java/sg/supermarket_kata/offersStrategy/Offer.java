@@ -3,6 +3,8 @@
  */
 package sg.supermarket_kata.offersStrategy;
 
+import java.math.BigDecimal;
+
 import sg.supermarket_kata.Discount;
 import sg.supermarket_kata.Product;
 import sg.supermarket_kata.enums.OfferType;
@@ -15,9 +17,9 @@ public abstract class Offer {
 
 	private OfferType offerType;
 	private final Product product;
-	private double amountForDiscount;
+	private BigDecimal amountForDiscount;
 
-	public Offer(OfferType offerType, Product product, double amountForDiscount) {
+	public Offer(OfferType offerType, Product product, BigDecimal amountForDiscount) {
 		this.offerType=offerType;
 		this.amountForDiscount=amountForDiscount;
 		this.product = product;
@@ -33,7 +35,7 @@ public abstract class Offer {
 	/**
 	 * @return the amountForDiscount
 	 */
-	public double getAmountForDiscount() {
+	public BigDecimal getAmountForDiscount() {
 		return amountForDiscount;
 	}
 
@@ -45,6 +47,6 @@ public abstract class Offer {
 	}
 
 
-	public abstract Discount calculateDiscountAmount(double quantity, double unitPrice);
+	public abstract Discount calculateDiscountAmount(BigDecimal quantity, BigDecimal unitPrice);
 
 }

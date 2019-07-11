@@ -3,16 +3,18 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
+
 /**
  * @author Badis
  *
  */
 public class Discount {
 	private final String description;
-    private final double discountAmount;
+    private final BigDecimal discountAmount;
     private final Product product;
 
-    public Discount(Product product, String description, double discountAmount) {
+    public Discount(Product product, String description, BigDecimal discountAmount) {
         this.product = product;
         this.description = description;
         this.discountAmount = discountAmount;
@@ -22,7 +24,7 @@ public class Discount {
         return description;
     }
 
-    public double getDiscountAmount() {
+    public BigDecimal getDiscountAmount() {
         return discountAmount;
     }
 

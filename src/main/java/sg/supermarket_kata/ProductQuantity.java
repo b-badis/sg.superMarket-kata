@@ -3,15 +3,17 @@
  */
 package sg.supermarket_kata;
 
+import java.math.BigDecimal;
+
 /**
  * @author Badis
  *
  */
 public class ProductQuantity {
     private final Product product;
-    private final double quantity;
+    private final BigDecimal quantity;
 
-    public ProductQuantity(Product product, double quantity) {
+    public ProductQuantity(Product product, BigDecimal quantity) {
         this.product = product;
         this.quantity = quantity;
     }
@@ -20,7 +22,7 @@ public class ProductQuantity {
         return product;
     }
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 }
