@@ -4,9 +4,7 @@
 package sg.supermarket_kata;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import sg.supermarket_kata.offersStrategy.Offer;
@@ -18,12 +16,8 @@ import sg.supermarket_kata.offersStrategy.Offer;
 
 // Cart is what the client has selected to purchase
 public class Cart {
-	private final List<ProductQuantity> items = new ArrayList<ProductQuantity>();
 	Map<Product, BigDecimal> productQuantities = new HashMap<Product, BigDecimal>();
 
-	List<ProductQuantity> getItems() {
-		return new ArrayList<ProductQuantity>(items);
-	}
 
 	void addItem(Product product) {
 		this.addItemQuantity(product, BigDecimal.ONE);
@@ -34,7 +28,6 @@ public class Cart {
 	}
 
 	public void addItemQuantity(Product product, BigDecimal quantity) {
-		items.add(new ProductQuantity(product, quantity));
 		if (productQuantities.containsKey(product)) {
 			productQuantities.put(product, productQuantities.get(product).add(quantity));
 		} else {

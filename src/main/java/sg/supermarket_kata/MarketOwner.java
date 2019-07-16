@@ -6,6 +6,7 @@ package sg.supermarket_kata;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import sg.supermarket_kata.enums.OfferType;
 import sg.supermarket_kata.offersStrategy.Offer;
@@ -37,9 +38,9 @@ public class MarketOwner {
 // generate the Bill for the client purchases (including the discounts)
 	public Bill extractBill(Cart cart) {
 		Bill bill = new Bill();
-		for (ProductQuantity pq : cart.getItems()) {
-			Product p = pq.getProduct();
-			BigDecimal quantity = pq.getQuantity();
+		for (Entry<Product, BigDecimal> pq : cart.productQuantities().entrySet()) {
+			Product p = pq.getKey();
+			BigDecimal quantity = pq.getValue();
 			BigDecimal unitPrice = this.catalog.getUnitPrice(p);
 			BigDecimal price = quantity.multiply(unitPrice);
 			bill.addProduct(p, quantity, unitPrice, price);
